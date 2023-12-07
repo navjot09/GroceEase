@@ -1,0 +1,17 @@
+.background {
+  position: relative;
+}
+
+.background::before {
+  content: "";
+  background: url("../../../../../public//assets/home-main-bg.png");
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 1;
+  z-index: -1;
+  background-color: white;
+}
