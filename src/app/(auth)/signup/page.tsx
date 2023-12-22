@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Grocery } from "../../../../public/assets";
 import { Button, Datepicker, Label, TextInput } from "flowbite-react";
-import { signup } from "./actions";
+import { signup } from "../../../actions/signup";
 import { useFormState, useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -28,7 +28,6 @@ export default function Singup() {
   let [state, formAction] = useFormState(signup, null);
   const router = useRouter();
   useEffect(() => {
-    console.log(state);
     if (state?.success) {
       toast.success(state.message);
       router.push("/home", {});
@@ -42,7 +41,7 @@ export default function Singup() {
       : "";
   };
   return (
-    <div className=" w-96">
+    <div className=" w-96 mx-4 lg:mx-0">
       <Image src={Grocery} alt="Grocey" width={80} className=" mx-auto mb-4" />
       <form className="flex flex-col gap-4" action={formAction}>
         <div>

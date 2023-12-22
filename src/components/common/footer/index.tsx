@@ -66,7 +66,7 @@ const socials = [Facebook, Instagram, LinkedIn, Twitter];
 export default function Footer() {
   return (
     <Container>
-      <div className=" flex py-16 border-t-2 border-[#0000000D] border-b-2">
+      <div className=" px-4 lg:px-0 lg:flex py-8 lg:py-16 border-t-2 border-[#0000000D] border-b-2">
         <div className=" basis-2/5">
           <div className=" flex items-center">
             <Image src={Grocery} width={60} height={60} alt="grocery-logo" />
@@ -75,9 +75,12 @@ export default function Footer() {
               <h4 className=" text-base color-disabled font-medium">GROCERY</h4>
             </div>
           </div>
-          <div className=" mt-12 flex flex-col gap-7">
+          <div className=" mt-12 flex flex-col gap-3 lg:gap-7">
             {details.map((detail) => (
-              <div key={detail.id} className=" flex gap-1 items-center">
+              <div
+                key={detail.id}
+                className=" flex gap-1 items-start lg:items-center"
+              >
                 <Image
                   src={detail.icon}
                   width={20}
@@ -92,13 +95,13 @@ export default function Footer() {
             ))}
           </div>
         </div>
-        <div className=" basis-3/4 flex">
+        <div className=" basis-3/4 lg:flex">
           {navs.map((nav) => (
-            <div className=" basis-1/3" key={nav.id}>
+            <div className=" basis-1/3 mt-4 lg:mt-0" key={nav.id}>
               <h3 className=" text-2xl font-semibold color-primary">
                 {nav.title}
               </h3>
-              <div className=" mt-14 flex flex-col gap-2">
+              <div className=" mt-4 lg:mt-14 flex flex-col gap-2">
                 {nav.links.map((link) => (
                   <Link href={link.link} key={link.title} className=" w-fit">
                     <p className=" text-base font-medium color-primary hover:text-[#3bb77e] w-fit hover:underline">
@@ -111,7 +114,7 @@ export default function Footer() {
           ))}
         </div>
       </div>
-      <div className=" flex justify-between items-center py-5">
+      <div className=" flex flex-col lg:flex-row gap-4 justify-between items-center py-5">
         <div>
           <p>© 2023, All rights reserved</p>
         </div>

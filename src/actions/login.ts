@@ -2,24 +2,13 @@
 import { ZodIssue, z } from "zod";
 import { cookies } from "next/headers";
 const User = z.object({
-  name: z
-    .string({
-      required_error: "Name is required",
-      invalid_type_error: "Name must be a string",
-    })
-    .min(3, { message: "Name should have more than 3 characters" })
-    .trim(),
-  dateOfBirth: z.date(),
-  phone: z
-    .string({ required_error: "Phone is required" })
-    .min(10, { message: "Invalid Phone" }),
   email: z.string().email(),
   password: z
     .string()
-    .min(8, { message: "Password should have more than 8 characters" }),
+    .min(6, { message: "Password should have more than 8 characters" }),
 });
 
-export async function signup(
+export async function login(
   prevState: any,
   formData: FormData
 ): Promise<{
@@ -28,17 +17,11 @@ export async function signup(
   message: string;
   success: boolean;
 }> {
-  const name = formData.get("name");
-  const dateOfBirth = formData.get("date")?.toString() ?? Date.now();
-  const phone = formData.get("phone");
   const email = formData.get("email");
   const password = formData.get("password");
 
   try {
     const parse = User.safeParse({
-      name,
-      dateOfBirth: new Date(dateOfBirth),
-      phone,
       email,
       password,
     });
@@ -51,7 +34,7 @@ export async function signup(
       };
     }
     const data = parse.data;
-    const res = await fetch("http://localhost:8080/api/auth/createUser", {
+    const res = await fetch(`${process.env.API_HOST}/api/auth/loginUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,17 +44,15 @@ export async function signup(
     });
     const response = await res.json();
     if (res.status === 200 && response?.success) {
-      console.log(response);
-      const oneDay = 24 * 60 * 60 * 1000;
+      const oneDay = 24 * 60 * 60;
       cookies().set("token", response?.data?.token, { maxAge: oneDay });
       return {
         validationFail: false,
         errors: [],
         success: true,
-        message: "Signed Up Succesfully",
+        message: "Logged In Succesfully",
       };
     }
-    console.log(response);
     return {
       validationFail: false,
       errors: [],
@@ -79,12 +60,11 @@ export async function signup(
       message: response?.message,
     };
   } catch (error) {
-    console.log(JSON.stringify(error, null, 2), "error");
     return {
       success: false,
       validationFail: false,
       errors: [],
-      message: "Sign Up Failed",
+      message: "Login Failed",
     };
   }
 }

@@ -5,6 +5,7 @@ import { ResponsiveType } from "react-multi-carousel";
 import { CommonCarousel } from "@/components/common/carousel";
 import { cookies } from "next/headers";
 import { Category } from "@/types/category";
+import Link from "next/link";
 const responsive: ResponsiveType = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 1536 },
@@ -27,7 +28,7 @@ const responsive: ResponsiveType = {
 const getData = async () => {
   try {
     const token = cookies().get("token");
-    const res = await fetch("http://localhost:8080/api/categories", {
+    const res = await fetch(`${process.env.API_HOST}/api/categories`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +76,8 @@ export const Categories = async () => {
         >
           {data?.map((item) => {
             return (
-              <div
+              <Link
+                href={`/products/${item._id}`}
                 key={item._id}
                 className=" flex flex-col cursor-pointer group w-64 rounded-xl overflow-hidden pb-3 lg:transition-all lg:duration-300 lg:ease-in-out shadow-sm lg:hover:shadow-md lg:hover:translate-y-[-10px] border "
               >
@@ -99,7 +101,7 @@ export const Categories = async () => {
                     {item.Description}
                   </p>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </CommonCarousel>

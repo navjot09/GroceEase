@@ -22,14 +22,14 @@ const responsive: ResponsiveType = {
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1.6,
+    items: 1.9,
   },
 };
 
 const getData = async () => {
   try {
     const token = cookies().get("token");
-    const res = await fetch("http://localhost:8080/api/products/featured", {
+    const res = await fetch(`${process.env.API_HOST}/api/products/featured`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -62,6 +62,7 @@ export const FeaturedProducts = async () => {
               </div>
               <CommonCarousel
                 showButtons={true}
+                itemClass=" flex"
                 renderButtonGroupOutside
                 arrows={false}
                 sliderClass=" !my-8 lg:!my-12"

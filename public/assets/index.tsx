@@ -1,6 +1,8 @@
 export { default as Cart } from "./cart.svg";
 export { default as ArrowDown } from "./arrow-down.svg";
 export { default as Grid } from "./grid.svg";
+export { default as GridActive } from "./grid-active.svg";
+export { default as GridBlack } from "./grid-black.svg";
 export { default as Grocery } from "./grocery.svg";
 export { default as Heart } from "./heart.svg";
 export { default as Search } from "./search.svg";
@@ -34,3 +36,7 @@ export { default as Promo1 } from "./Promo1.png";
 export { default as Promo2 } from "./Promo2.png";
 export { default as ArrowRightWhite } from "./arrow-right-white.svg";
 export { default as AuthPage } from "./auth-page.png";
+export { default as Orders } from "./orders.svg";
+export { default as OrderActive } from "./orders-active.svg";
+export { default as Hamburger } from "./hamburger.svg";
+export { default as Logout } from "./logout.svg";

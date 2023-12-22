@@ -5,7 +5,7 @@ import { Button, Label, TextInput } from "flowbite-react";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
-import { login } from "./actions";
+import { login } from "../../../actions/login";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 function SubmitButton() {
@@ -40,7 +40,7 @@ export default function Login() {
       : "";
   };
   return (
-    <div className=" w-96">
+    <div className=" w-96 mx-4 lg:mx-0">
       <Image src={Grocery} alt="Grocey" width={80} className=" mx-auto mb-4" />
       <form action={formAction} className="flex flex-col gap-4">
         <div>
