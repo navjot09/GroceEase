@@ -34,14 +34,17 @@ export async function login(
       };
     }
     const data = parse.data;
-    const res = await fetch(`${process.env.API_HOST}/api/auth/loginUser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-      cache: "no-cache",
-    });
+    const res = await fetch(
+      `https://groceease.onrender.com/api/auth/loginUser`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        cache: "no-cache",
+      }
+    );
     const response = await res.json();
     if (res.status === 200 && response?.success) {
       const oneDay = 24 * 60 * 60;
