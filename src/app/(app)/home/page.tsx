@@ -8,8 +8,6 @@ export default function Home() {
   return (
     <div>
       <NewsLetter />
-      {process.env.API_HOST}
-      {process.env.NODE_ENV}
       <Categories />
       <FeaturedProducts />
       <Promos />

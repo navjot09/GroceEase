@@ -42,8 +42,6 @@ export default function Login() {
   return (
     <div className=" w-96 mx-4 lg:mx-0">
       <Image src={Grocery} alt="Grocey" width={80} className=" mx-auto mb-4" />
-      {process.env.API_HOST}
-      {process.env.NODE_ENV}
       <form action={formAction} className="flex flex-col gap-4">
         <div>
           <Label>
