@@ -12,7 +12,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Link
       href={`/product/${product._id}`}
-      className=" w-44 lg:w-52 rounded-xl overflow-hidden pb-3 flex flex-col items-center border gap-2 py-2 relative bg-white"
+      className="w-full rounded-xl overflow-hidden pb-3 flex flex-col items-center border gap-2 py-2 relative bg-white lg:w-52"
     >
       {product.OnSale && (
         <div className=" group absolute left-2 top-0">

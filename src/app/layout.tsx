@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
+import NavigationProgress from "@/components/common/navigationProgress";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${quicksand.className} antialiased`}>
+        <NavigationProgress />
         {children}
         <ToastContainer
           draggable

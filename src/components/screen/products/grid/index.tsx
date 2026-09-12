@@ -113,7 +113,7 @@ export const Grid = ({ category }: { category: string }) => {
           ))}
         </Dropdown>
       </div>
-      <div className=" flex flex-wrap lg:gap-2 gap-1">
+      <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-wrap">
         {paginatedProducts?.map((item) => (
           <ProductCard key={item._id} product={item} />
         ))}

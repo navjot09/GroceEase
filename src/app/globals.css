@@ -1,6 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navigation-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.navigation-progress__line {
+  width: 35%;
+  height: 100%;
+  background: #3bb77e;
+  box-shadow: 0 0 8px #3bb77e;
+  animation: navigation-progress 1.2s ease-in-out infinite;
+}
+
+@keyframes navigation-progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
 .color-active {
   color: #3bb77e;
 }
