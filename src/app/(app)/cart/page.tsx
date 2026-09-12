@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Cart } from "../../../../public/assets";
 import { postOrder } from "@/actions/order";
 import { toast } from "react-toastify";
+import { useCart } from "@/context/cart";
 
 export default function Categories() {
   const [itinerary, setItinerary] = useState<Itinerary | null>(null);
@@ -21,6 +22,7 @@ export default function Categories() {
   const [loading, setLoading] = useState(true);
   const [note, setNote] = useState("");
   const [loadingOrder, setLoadingOrder] = useState(false);
+  const { seed, refresh } = useCart();
 
   const getUserAddress = useCallback(async () => {
     const { success, error, data } = await getAddress();
@@ -34,6 +36,13 @@ export default function Categories() {
     const { data, success, empty } = await getItinerary();
     if (success && !empty && data) {
       setItinerary(data);
+      // The itinerary already carries every quantity, so hand them to the
+      // provider rather than letting the rows fetch the cart again.
+      seed(
+        Object.fromEntries(
+          data.CartItems.map((item) => [item.ProductId, item.Quantity])
+        )
+      );
     } else {
       setItinerary(null);
     }
@@ -50,6 +59,8 @@ export default function Categories() {
       if (success) {
         toast.success(message);
         getData();
+        // Checkout empties the cart server-side; pull the provider back in sync.
+        refresh();
       } else {
         toast.error(message);
       }
@@ -86,7 +97,7 @@ export default function Categories() {
             <h1 className=" text-3xl font-semibold color-primary my-6 ms-3">
               My Cart
             </h1>
-            <div className=" flex flex-col gap-4 px-4 lg:px-0">
+            <div className=" flex flex-col gap-4">
               {itinerary?.CartItems.map((item) => (
                 <div
                   key={item._id}
@@ -139,7 +150,7 @@ export default function Categories() {
             </div>
           </div>
         </div>
-        <div className=" basis-1/3 bg-green-50 rounded-lg p-4 h-fit mx-4 lg:mx-0">
+        <div className=" basis-1/3 bg-green-50 rounded-lg p-4 h-fit">
           <div>
             <h1 className=" text-xl font-semibold color-primary my-6">
               Bill Details

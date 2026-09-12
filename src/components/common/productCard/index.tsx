@@ -46,7 +46,11 @@ export const ProductCard = ({ product }: { product: Product }) => {
         <div>
           <RatingWithNumber rating={product.Rating} />
         </div>
-        <div className=" flex justify-between items-center py-2">
+        {/* One AddButton, positioned responsively by its wrapper. There used to be
+            two — `hidden lg:block` and `flex lg:hidden` — but Tailwind's `hidden`
+            is display:none, which does not unmount, so both ran their mount fetch
+            at every viewport and each held its own stale copy of the quantity. */}
+        <div className=" flex flex-col lg:flex-row lg:justify-between lg:items-center gap-2 py-2">
           <div className=" flex gap-1 items-baseline">
             {product.OnSale ? (
               <>
@@ -65,12 +69,9 @@ export const ProductCard = ({ product }: { product: Product }) => {
               </>
             )}
           </div>
-          <div className=" hidden lg:block">
+          <div className=" flex justify-center lg:block">
             <AddButton id={product._id} size="sm" />
           </div>
-        </div>
-        <div className=" flex lg:hidden justify-center">
-          <AddButton id={product._id} size="sm" />
         </div>
       </div>
     </Link>

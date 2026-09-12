@@ -59,7 +59,7 @@ const getData = async () => {
 export const Categories = async () => {
   const { success, error, data } = await getData();
   return (
-    <main className="!pb-0 py-12 lg:py-24 px-4 lg:px-0">
+    <main className="!pb-0 py-12 lg:py-24">
       <Container>
         <div className="">
           <h2 className=" text-3xl lg:text-4xl font-semibold">

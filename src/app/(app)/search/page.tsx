@@ -61,7 +61,7 @@ export default function Search() {
 
   return (
     <Container>
-      <div className=" mt-6 mb-11 mx-4 lg:mx-0">
+      <div className=" mt-6 mb-11">
         <div className=" flex flex-wrap gap-1 lg:gap-2">
           {products?.map((item) => (
             <ProductCard key={item._id} product={item} />

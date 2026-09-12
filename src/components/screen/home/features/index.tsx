@@ -32,7 +32,7 @@ export const Features = () => {
   return (
     <main>
       <Container>
-        <div className=" flex flex-col lg:flex-row px-4 lg:px-0 gap-6 lg:gap-0 py-12 lg:py-24">
+        <div className=" flex flex-col lg:flex-row gap-6 lg:gap-0 py-12 lg:py-24">
           {data.map((item) => {
             return (
               <div

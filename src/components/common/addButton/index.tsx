@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
 import { CartActive } from "../../../../public/assets";
-import { useEffect, useState } from "react";
-import { addToCart, getCartItems, removeFromCart } from "@/actions/cart";
+import { useState } from "react";
+import { addToCart, removeFromCart } from "@/actions/cart";
+import { useCart } from "@/context/cart";
 
 type Props = {
   size: "sm" | "lg";
@@ -11,39 +12,41 @@ type Props = {
 };
 
 export const AddButton = ({ size, id, callback }: Props) => {
-  const [quantity, setQuantity] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const { quantities, ready, adjustQuantity, beginMutation, endMutation } =
+    useCart();
+  const [pending, setPending] = useState(false);
+  const quantity = quantities[id] ?? 0;
 
+  // Disabled until the shared cart has loaded, so a click can never apply to an
+  // unknown baseline — a product already in the cart renders as "Add" (quantity
+  // defaults to 0) until the fetch lands. This is one fetch for the whole page
+  // now, not one per button, so the wait is short.
+  const busy = pending || !ready;
+
+  // Adjust before awaiting, so the click reads as instant. The delta is relative
+  // because the backend applies $inc and owns the resulting count.
   const addProduct = async () => {
-    setLoading(true);
+    setPending(true);
+    beginMutation(id);
+    adjustQuantity(id, 1);
     const { success } = await addToCart(id);
-    if (success) {
-      setQuantity((prev) => prev + 1);
-    }
+    if (!success) adjustQuantity(id, -1);
+    endMutation(id);
     if (callback) callback();
-    setLoading(false);
+    setPending(false);
   };
 
   const removeProduct = async () => {
-    setLoading(true);
+    if (quantity === 0) return;
+    setPending(true);
+    beginMutation(id);
+    adjustQuantity(id, -1);
     const { success } = await removeFromCart(id);
-    if (success) setQuantity((prev) => prev - 1);
+    if (!success) adjustQuantity(id, 1);
+    endMutation(id);
     if (callback) callback();
-    setLoading(false);
+    setPending(false);
   };
-
-  useEffect(() => {
-    const getCount = async () => {
-      setLoading(true);
-      const { success, data } = await getCartItems();
-      if (success) {
-        const res = data?.find((item) => item.ProductId === id)?.Quantity ?? 0;
-        setQuantity(res);
-      }
-      setLoading(false);
-    };
-    getCount();
-  }, [id]);
 
   return (
     <div
@@ -53,7 +56,7 @@ export const AddButton = ({ size, id, callback }: Props) => {
     >
       {quantity === 0 ? (
         <button
-          disabled={loading}
+          disabled={busy}
           onClick={(e) => {
             e.preventDefault();
             addProduct();
@@ -65,11 +68,12 @@ export const AddButton = ({ size, id, callback }: Props) => {
           </div>
         </button>
       ) : (
-        <button disabled={loading}>
+        <button disabled={busy}>
           <div className=" flex gap-1 bg-[#DEF9EC] rounded items-center">
             <div
               onClick={(e) => {
                 e.preventDefault();
+                if (busy) return;
                 removeProduct();
               }}
               className=" px-2 py-1 border-r hover:bg-[#C5EAD9C7]"
@@ -82,6 +86,7 @@ export const AddButton = ({ size, id, callback }: Props) => {
             <div
               onClick={(e) => {
                 e.preventDefault();
+                if (busy) return;
                 addProduct();
               }}
               className=" px-2 py-1 border-l hover:bg-[#C5EAD9C7]"
@@ -91,7 +96,7 @@ export const AddButton = ({ size, id, callback }: Props) => {
           </div>
         </button>
       )}
-      {loading && (
+      {busy && (
         <div className=" absolute bottom-0 h-1 rounded-b animate-loading bg-green-400" />
       )}
     </div>

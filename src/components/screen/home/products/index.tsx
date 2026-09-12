@@ -50,7 +50,7 @@ const getData = async () => {
 export const FeaturedProducts = async () => {
   const data = await getData();
   return (
-    <main className="py-12 lg:py-24 px-4 lg:px-0">
+    <main className="py-12 lg:py-24">
       <Container>
         {data?.map((item) => {
           return (

@@ -15,7 +15,7 @@ export const NewsLetter = async () => {
               alt="grocery-search"
             />
           </div>
-          <div className="basis-1/2 py-12 lg:py-24 px-4 lg:px-0 gap-6 flex flex-col order-1">
+          <div className="basis-1/2 py-12 lg:py-24 gap-6 flex flex-col order-1">
             <h1 className=" text-4xl lg:text-6xl font-bold color-primary text-center lg:text-start">
               Don’t miss our daily <br className="hidden lg:block" /> amazing
               deals.

@@ -11,7 +11,7 @@ export default async function Categories() {
         {data?.map((item) => {
           return (
             <div key={item._id}>
-              <div className=" lg:flex px-4 lg:px-0">
+              <div className=" lg:flex">
                 <div className=" basis-1/2">
                   <h1 className=" text-3xl font-semibold color-primary hover:underline hover:text-[#3bb77e] w-fit mx-auto lg:mx-0">
                     <Link href={`products/${item.parent._id}`}>

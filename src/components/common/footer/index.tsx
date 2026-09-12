@@ -66,7 +66,7 @@ const socials = [Facebook, Instagram, LinkedIn, Twitter];
 export default function Footer() {
   return (
     <Container>
-      <div className=" px-4 lg:px-0 lg:flex py-8 lg:py-16 border-t-2 border-[#0000000D] border-b-2">
+      <div className=" lg:flex py-8 lg:py-16 border-t-2 border-[#0000000D] border-b-2">
         <div className=" basis-2/5">
           <div className=" flex items-center">
             <Image src={Grocery} width={60} height={60} alt="grocery-logo" />

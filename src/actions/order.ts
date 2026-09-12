@@ -36,11 +36,11 @@ export const postOrder = async ({
     });
     if (res.status === 201) {
       revalidatePath("/orders");
-      setTimeout(() => {
-        revalidateTag("cartItems");
-        revalidateTag("itinerary");
-        revalidateTag("orders");
-      }, 0);
+      // "orders" is the only live tag (getOrders below subscribes to it).
+      // "cartItems" and "itinerary" tagged nothing after the cart cache was
+      // removed. Called synchronously — deferring it into a timer made the
+      // purge fire-and-forget, lost on any host that freezes after responding.
+      revalidateTag("orders");
       return {
         success: true,
         message: "Order Places Successfully",

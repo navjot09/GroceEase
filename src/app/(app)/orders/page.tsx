@@ -9,7 +9,7 @@ export default async function Orders() {
   }
   return (
     <Container>
-      <div className=" mx-4 lg:mx-0">
+      <div>
         <h1 className=" text-3xl font-semibold color-primary">My Orders</h1>
         {data && data?.length > 0 && <Items orders={data} />}
       </div>
